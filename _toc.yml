@@ -1,0 +1,64 @@
+format: jb-article
+root: Introduction
+sections:
+- file: ch1/0
+  sections:
+  - file: ch1/1
+  - file: ch1/2
+    sections:
+    - file: ch1/02/1
+    - file: ch1/02/2
+  - file: ch1/3
+    sections:
+    - file: ch1/03/1
+    - file: ch1/03/2
+- file: ch2/0
+  sections:
+  - file: ch2/1
+  - file: ch2/2
+    sections:
+    - file: ch2/02/1
+  - file: ch2/3
+  - file: ch2/4
+    sections:
+    - file: ch2/04/1
+  - file: ch2/5
+  - file: ch2/6
+    sections:
+    - file: ch2/06/1
+  - file: ch2/7
+  - file: ch2/8
+  - file: ch2/9
+    sections:
+    - file: ch2/09/1
+- file: ch3/0
+  sections:
+  - file: ch3/1
+  - file: ch3/2
+  - file: ch3/3
+  - file: ch3/4
+  - file: ch3/5
+    sections:
+    - file: ch3/05/1
+  - file: ch3/6
+- file: ch4/0
+  sections:
+  - file: ch4/1
+  - file: ch4/2
+    sections:
+    - file: ch4/02/1
+  - file: ch4/3
+- file: ch5/0
+  sections:
+  - file: ch5/1
+  - file: ch5/2
+  - file: ch5/3
+  - file: ch5/4
+- file: dix/0
+  sections:
+  - file: dix/1
+  - file: dix/2
+  - file: dix/3
+  - file: dix/4
+  - file: dix/5
+  - file: dix/6

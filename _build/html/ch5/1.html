@@ -1,0 +1,805 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.1 Eigenvalues and Eigenvectors &#8212; Linear Algebra with MATLAB</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch5/1';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.2 The Characteristic Polynomial" href="2.html" />
+    <link rel="prev" title="Chapter 5" href="0.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../Introduction.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/UNG.logo.png" class="logo__image only-light" alt="Linear Algebra with MATLAB - Home"/>
+    <script>document.write(`<img src="../_static/UNG.logo.png" class="logo__image only-dark" alt="Linear Algebra with MATLAB - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../Introduction.html">
+                    Linear Algebra Using MATLAB
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch1/0.html">Chapter 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch1/1.html">1.1 Systems of Linear Equations</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch1/2.html">1.2 Row Operations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch1/02/1.html">1.2.1 Lab 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ch1/02/2.html">1.2.2 Homework</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch1/3.html">1.3 Parameterized Solutions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch1/03/1.html">1.3.1 Lab 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ch1/03/2.html">1.3.2 Homework</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch2/0.html">Chapter 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/1.html">2.1 Vectors</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch2/2.html">2.2 Vector Equations and Spans</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch2/02/1.html">2.2.1 Homework</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/3.html">2.3 Matrix Equations</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch2/4.html">2.4 Solution Sets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch2/04/1.html">2.4.1 Lab 3</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/5.html">2.5 Linear Independence</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch2/6.html">2.6 Subspaces</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch2/06/1.html">2.6.1 Lab 4</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/7.html">2.7 Basis and Dimension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/8.html">2.8 Bases as Coordinate Systems</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch2/9.html">2.9 The Rank Theorem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch2/09/1.html">2.9.1 Lab 5</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch3/0.html">Chapter 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/1.html">3.1 Matrix Transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/2.html">3.2 One-to-one and Onto Transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/3.html">3.3 Linear Transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/4.html">3.4 Matrix Multiplication</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch3/5.html">3.5 Matrix Inverses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch3/05/1.html">3.5.1 Lab 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/6.html">3.6 Invertible Matrix Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch4/0.html">Chapter 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch4/1.html">4.1 Determinants: Definition</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch4/2.html">4.2 Cofactor Expansions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch4/02/1.html">4.2.1 Lab 7</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch4/3.html">4.3 Determinants and Volume</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="0.html">Chapter 5</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.1 Eigenvalues and Eigenvectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.html">5.2 The Characteristic Polynomial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">5.3 Similarity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">5.4 Diagonalization</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../dix/0.html">Appendix: Instructor Apps</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dix/1.html">A.1 Generate <span class="math notranslate nohighlight">\(n\times n\)</span> example matrix that is invertible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dix/2.html">A.2 Generate example matrix suitable for row-reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dix/3.html">A.3 Dollar sign math matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dix/4.html">A.4 Dollar sign math for creating vectors from columns of matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dix/5.html">A.5 Timesaver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dix/6.html">A.6 Cofactor Expansion Tool</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/StraightDraw/linear/master?urlpath=tree/content/ch5/1.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch5/1.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>5.1 Eigenvalues and Eigenvectors</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-if-a-vector-is-an-eigenvector-of-a-matrix">Determining if a vector is an eigenvector of a matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1">Example 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">Example 2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-eignevalues">Finding eignevalues</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3">Example 3</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="eigenvalues-and-eigenvectors">
+<h1>5.1 Eigenvalues and Eigenvectors<a class="headerlink" href="#eigenvalues-and-eigenvectors" title="Link to this heading">#</a></h1>
+<dl class="simple myst">
+<dt>Eigenvector</dt><dd><p>An eigenvector of <span class="math notranslate nohighlight">\(A\)</span> is a nonzero vector <span class="math notranslate nohighlight">\(\vec v\)</span> in <span class="math notranslate nohighlight">\(\mathbb R^n\)</span> such that <span class="math notranslate nohighlight">\(A\vec v = \lambda \vec v\)</span>, for some scalar <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+</dd>
+<dt>Eigenvalue</dt><dd><p>An eigenvalue of <span class="math notranslate nohighlight">\(A\)</span> is a scalar <span class="math notranslate nohighlight">\(\lambda\)</span> such that the equation <span class="math notranslate nohighlight">\(A\vec v = \lambda \vec v\)</span> has a nontrivial solution.</p>
+</dd>
+</dl>
+<p><strong>Terminology.</strong> If <span class="math notranslate nohighlight">\(A\vec v = \lambda \vec v\)</span> for some vector <span class="math notranslate nohighlight">\(\vec v\neq \vec 0\)</span>, we say that <span class="math notranslate nohighlight">\(\lambda\)</span> is the eigenvalue for <span class="math notranslate nohighlight">\(\vec v\)</span>, and that <span class="math notranslate nohighlight">\(\vec v\)</span> is an eigenvector for <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<section id="determining-if-a-vector-is-an-eigenvector-of-a-matrix">
+<h2>Determining if a vector is an eigenvector of a matrix<a class="headerlink" href="#determining-if-a-vector-is-an-eigenvector-of-a-matrix" title="Link to this heading">#</a></h2>
+<section id="example-1">
+<h3>Example 1<a class="headerlink" href="#example-1" title="Link to this heading">#</a></h3>
+<p>Determine if the vector <span class="math notranslate nohighlight">\(\vec v\)</span> is an eigenvector of the matrix <span class="math notranslate nohighlight">\(A\)</span> where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A = \left[\begin{array}{rrr}15&amp;0&amp;24\\9&amp;2&amp;18\\-8&amp;0&amp;-13\end{array}\right]\end{split}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\vec v = \left[\begin{array}{r}2\\3\\-1\\\end{array}\right]\end{split}\]</div>
+<p><strong>Solution.</strong> The question is whether the product <span class="math notranslate nohighlight">\(A\vec v\)</span> is equal to a scalar multiple of <span class="math notranslate nohighlight">\(\vec v\)</span>, so we should just multiply and check.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">15</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">24</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">9</span><span class="w"> </span><span class="s">2</span><span class="w"> </span><span class="s">18</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">8</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="mi">13</span><span class="w"> </span><span class="p">];</span>
+<span class="n">v</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">3</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v =
+
+     2
+     3
+    -1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ans =
+
+     6
+     6
+    -3
+</pre></div>
+</div>
+</div>
+</div>
+<p>By inspection, we see that <span class="math notranslate nohighlight">\(A\vec v\)</span> is not a scalar multiple of <span class="math notranslate nohighlight">\(\vec v\)</span>, so <span class="math notranslate nohighlight">\(\vec v\)</span> is not an eigenvector of <span class="math notranslate nohighlight">\(A\)</span>.</p>
+</section>
+<section id="example-2">
+<h3>Example 2<a class="headerlink" href="#example-2" title="Link to this heading">#</a></h3>
+<p>Determine if the vector <span class="math notranslate nohighlight">\(\vec y\)</span> is an eigenvector of the matrix <span class="math notranslate nohighlight">\(A\)</span> where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}B = \left[\begin{array}{rrrr}-4&amp;16&amp;-14&amp;22\\-6&amp;20&amp;-12&amp;24\\3&amp;-8&amp;9&amp;-11\\4&amp;-12&amp;8&amp;-14\\\end{array}\right]\end{split}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\vec y = \left[\begin{array}{r}0\\-1\\0\\1\end{array}\right]\end{split}\]</div>
+<p><strong>Solution.</strong> Same question as above, so we multiply and check.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">B</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">22</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">6</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">-</span><span class="mi">12</span><span class="w"> </span><span class="mi">24</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="o">-</span><span class="mi">11</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">-</span><span class="mi">12</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="p">];</span>
+<span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="s">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y =
+
+     1
+    -1
+     0
+     1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">B</span><span class="o">*</span><span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ans =
+
+     2
+    -2
+     0
+     2
+</pre></div>
+</div>
+</div>
+</div>
+<p>Clearly, <span class="math notranslate nohighlight">\(B\vec y = 2\vec y\)</span>, so <span class="math notranslate nohighlight">\(2\)</span> is an eignevalue of matrix <span class="math notranslate nohighlight">\(B\)</span>, and <span class="math notranslate nohighlight">\(y\)</span> is its associated eigenvector.</p>
+</section>
+</section>
+<section id="finding-eignevalues">
+<h2>Finding eignevalues<a class="headerlink" href="#finding-eignevalues" title="Link to this heading">#</a></h2>
+<p>The <em>eignevalues</em> of a matrix <span class="math notranslate nohighlight">\(A\)</span> are possible values <span class="math notranslate nohighlight">\(\lambda\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[A \vec v=\lambda \vec v\]</div>
+<p>which, after some algebra, is equivalent to solving a homogeneous set of equations.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align} A \vec v &amp;= \lambda \vec v \\ \iff \hspace{5mm}A \vec v - \lambda \vec v &amp;= \vec 0 \\ \iff \hspace{5mm}A \vec v - \lambda I \vec v &amp;= \vec 0 \\ \iff \hspace{5mm} (A - \lambda I) \vec v &amp;= \vec 0\end{align}\end{split}\]</div>
+<p>This means we can test eigenvalues by creating the matrix</p>
+<div class="math notranslate nohighlight">
+\[A - \lambda I\]</div>
+<p>and finding whether its <em>null space</em> has any nonzero vectors in it.</p>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h3>
+<p>Determine if <span class="math notranslate nohighlight">\(\lambda = 3\)</span> is an eigenvalue for the matrix <span class="math notranslate nohighlight">\(A\)</span> where</p>
+<div class="math notranslate nohighlight">
+\[A = \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">13</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="mi">12</span><span class="w"> </span><span class="mi">14</span><span class="w"> </span><span class="p">];</span>
+<span class="n">a</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="o">*</span><span class="nb">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a =
+
+     0     0     0
+    -1   -16    15
+    -1   -12    11
+</pre></div>
+</div>
+</div>
+</div>
+<p>To see if the null space is empty, we row-reduce the augmented matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="nb">rref</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ans =
+
+     1     0     1     0
+     0     1    -1     0
+     0     0     0     0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because the homogeneous system is consistent, we know there are non-trivial solutions which means there are non-zero vectors in the null space of <span class="math notranslate nohighlight">\(A-\lambda I\)</span>. Thus, <span class="math notranslate nohighlight">\(\lambda = 3\)</span> is an eigenvalue.</p>
+</section>
+<section id="example-3">
+<h3>Example 3<a class="headerlink" href="#example-3" title="Link to this heading">#</a></h3>
+<p>To determine the associated eigenvector(s) once we know an eigenvalue, we write the solutions to the homogeneous system in vector form.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}x_1 &amp;= -x_3 \\ x_2 &amp;= x_3 \\  x_3 &amp;\text{ is free}\end{align} \implies \vec v = \left[\begin{array}{r}-1\\1\\1\\\end{array}\right]\end{split}\]</div>
+<p>The vector <span class="math notranslate nohighlight">\(\vec v\)</span> is an eigenvector of <span class="math notranslate nohighlight">\(A\)</span> associated with the eigenvalue <span class="math notranslate nohighlight">\(\lambda = 3\)</span>, which can be verified by multiplication.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="s">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v =
+
+    -1
+     1
+     1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ans =
+
+    -3
+     3
+     3
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are testing the specific equality:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ans =
+
+  3x1 logical array
+
+   1
+   1
+   1
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because equality holds (all 1’s in array), we know that we have found a eigenvalue-eigenvector pair.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "matlab"
+        },
+        kernelOptions: {
+            name: "matlab",
+            path: "./ch5"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'matlab'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="0.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Chapter 5</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">5.2 The Characteristic Polynomial</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-if-a-vector-is-an-eigenvector-of-a-matrix">Determining if a vector is an eigenvector of a matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1">Example 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">Example 2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-eignevalues">Finding eignevalues</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3">Example 3</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Robb Sinn
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

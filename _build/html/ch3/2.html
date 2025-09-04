@@ -1,0 +1,760 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>3.2 One-to-one and Onto Transformations &#8212; Linear Algebra with MATLAB</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch3/2';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.3 Linear Transformations" href="3.html" />
+    <link rel="prev" title="3.1 Matrix Transformations" href="1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../Introduction.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/UNG.logo.png" class="logo__image only-light" alt="Linear Algebra with MATLAB - Home"/>
+    <script>document.write(`<img src="../_static/UNG.logo.png" class="logo__image only-dark" alt="Linear Algebra with MATLAB - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../Introduction.html">
+                    Linear Algebra Using MATLAB
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch1/0.html">Chapter 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch1/1.html">1.1 Systems of Linear Equations</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch1/2.html">1.2 Row Operations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch1/02/1.html">1.2.1 Lab 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ch1/02/2.html">1.2.2 Homework</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch1/3.html">1.3 Parameterized Solutions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch1/03/1.html">1.3.1 Lab 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ch1/03/2.html">1.3.2 Homework</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch2/0.html">Chapter 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/1.html">2.1 Vectors</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch2/2.html">2.2 Vector Equations and Spans</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch2/02/1.html">2.2.1 Homework</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/3.html">2.3 Matrix Equations</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch2/4.html">2.4 Solution Sets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch2/04/1.html">2.4.1 Lab 3</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/5.html">2.5 Linear Independence</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch2/6.html">2.6 Subspaces</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch2/06/1.html">2.6.1 Lab 4</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/7.html">2.7 Basis and Dimension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/8.html">2.8 Bases as Coordinate Systems</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch2/9.html">2.9 The Rank Theorem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch2/09/1.html">2.9.1 Lab 5</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="0.html">Chapter 3</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1.html">3.1 Matrix Transformations</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">3.2 One-to-one and Onto Transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.html">3.3 Linear Transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.html">3.4 Matrix Multiplication</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="5.html">3.5 Matrix Inverses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="05/1.html">3.5.1 Lab 6</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="6.html">3.6 Invertible Matrix Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch4/0.html">Chapter 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch4/1.html">4.1 Determinants: Definition</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ch4/2.html">4.2 Cofactor Expansions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ch4/02/1.html">4.2.1 Lab 7</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch4/3.html">4.3 Determinants and Volume</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch5/0.html">Chapter 5</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/1.html">5.1 Eigenvalues and Eigenvectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/2.html">5.2 The Characteristic Polynomial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/3.html">5.3 Similarity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/4.html">5.4 Diagonalization</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../dix/0.html">Appendix: Instructor Apps</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dix/1.html">A.1 Generate <span class="math notranslate nohighlight">\(n\times n\)</span> example matrix that is invertible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dix/2.html">A.2 Generate example matrix suitable for row-reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dix/3.html">A.3 Dollar sign math matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dix/4.html">A.4 Dollar sign math for creating vectors from columns of matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dix/5.html">A.5 Timesaver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dix/6.html">A.6 Cofactor Expansion Tool</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/StraightDraw/linear/master?urlpath=tree/content/ch3/2.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch3/2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>3.2 One-to-one and Onto Transformations</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#domain-and-codomain">Domain and Codomain</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theorem-one-to-one-matrix-transformations">Theorem. <em>One-to-one</em> matrix transformations.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theorem-onto-matrix-transformations">Theorem. <em>Onto</em> matrix transformations.</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="one-to-one-and-onto-transformations">
+<h1>3.2 One-to-one and Onto Transformations<a class="headerlink" href="#one-to-one-and-onto-transformations" title="Link to this heading">#</a></h1>
+<section id="domain-and-codomain">
+<h2>Domain and Codomain<a class="headerlink" href="#domain-and-codomain" title="Link to this heading">#</a></h2>
+<p>A transformation</p>
+<div class="math notranslate nohighlight">
+\[T\left(\vec x\right) = \vec y\]</div>
+<p>based on the <span class="math notranslate nohighlight">\(n\times m\)</span> matrix <span class="math notranslate nohighlight">\(A\)</span> always maps from the domain <span class="math notranslate nohighlight">\(\mathbb R^m\)</span> into the range <span class="math notranslate nohighlight">\(\mathbb R^n\)</span>. The vectors <span class="math notranslate nohighlight">\(\vec x\)</span> in the domain, to be able to be multiplied in the order <span class="math notranslate nohighlight">\(A\vec x\)</span> must have the same number of components as the columns of <span class="math notranslate nohighlight">\(A\)</span>, which is <span class="math notranslate nohighlight">\(m\)</span>. The vectors <span class="math notranslate nohighlight">\(\vec y\)</span> in the range will have <span class="math notranslate nohighlight">\(n\)</span> components because <span class="math notranslate nohighlight">\(n\)</span> dot products will be needed.</p>
+<p>We reproduce a theorem from Margalit to show what we can do with MATLAB to verify a matrix transformation is one-to-one.</p>
+<section id="theorem-one-to-one-matrix-transformations">
+<h3>Theorem. <em>One-to-one</em> matrix transformations.<a class="headerlink" href="#theorem-one-to-one-matrix-transformations" title="Link to this heading">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(A\)</span> be an <span class="math notranslate nohighlight">\(m\times n\)</span> matrix, and let <span class="math notranslate nohighlight">\(T\left(\vec x\right) = A \vec x\)</span> be the associated matrix transformation. The following statements are equivalent:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(T\)</span> is one-to-one.</p></li>
+<li><p>For every <span class="math notranslate nohighlight">\(\vec b \in \mathbb R^m\)</span>, the equation <span class="math notranslate nohighlight">\(T\left(\vec x\right) = \vec b\)</span> has at most one solution.</p></li>
+<li><p>For every <span class="math notranslate nohighlight">\(\vec b\in \mathbb R^n\)</span>, the equation <span class="math notranslate nohighlight">\(A\vec x = \vec b\)</span> has a unique solution or is inconsistent.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A\vec x = \vec 0\)</span> has only the trivial solution.</p></li>
+<li><p>The columns of <span class="math notranslate nohighlight">\(A\)</span> are linearly independent.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A\)</span> has a pivot in every column.</p></li>
+<li><p>The range of <span class="math notranslate nohighlight">\(T\)</span> has dimension <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+</ol>
+<p>To verify a matrix transformation is one-to-one, we can use option 6: row-reduce <span class="math notranslate nohighlight">\(A\)</span> to determine if every column corresponds to a pivot position.</p>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
+<p>Consider the transformations corresponding to the following matrices:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A = \left[\begin{array}{rr}3&amp;-11\\0&amp;1\\0&amp;1\\\end{array}\right],\hspace{1cm} B = \left[\begin{array}{rrr}0&amp;-1&amp;1\\2&amp;3&amp;5\\-4&amp;9&amp;-24\\\end{array}\right]\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}C = \left[\begin{array}{rrrr}0&amp;0&amp;-1&amp;1\\1&amp;4&amp;1&amp;1\\1&amp;4&amp;-2&amp;6\\1&amp;4&amp;-2&amp;4\\\end{array}\right],\hspace{1cm} D = \left[\begin{array}{rrrrr}4&amp;2&amp;23&amp;10&amp;8\\-4&amp;-2&amp;-18&amp;-7&amp;-6\\-16&amp;-8&amp;-57&amp;-18&amp;-19\\\end{array}\right]\end{split}\]</div>
+<p>It should be clear right away that the <em>wide</em> matrix <span class="math notranslate nohighlight">\(D\)</span> could never be associated with a one-to-one transformation. There is no way it could have pivots in all five columns since only three pivots are possible. Let’s check on the others.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">11</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="s">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="s">1</span><span class="w"> </span><span class="s">]</span><span class="p">;</span>
+<span class="n">B</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">2</span><span class="w"> </span><span class="s">3</span><span class="w"> </span><span class="s">5</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="o">-</span><span class="mi">24</span><span class="w"> </span><span class="p">];</span>
+<span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="s">4</span><span class="w"> </span><span class="s">1</span><span class="w"> </span><span class="s">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="s">4</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="s">4</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">];</span>
+<span class="n">D</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="mi">18</span><span class="w"> </span><span class="o">-</span><span class="mi">7</span><span class="w"> </span><span class="o">-</span><span class="mi">6</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">16</span><span class="w"> </span><span class="o">-</span><span class="mi">8</span><span class="w"> </span><span class="o">-</span><span class="mi">57</span><span class="w"> </span><span class="o">-</span><span class="mi">18</span><span class="w"> </span><span class="o">-</span><span class="mi">19</span><span class="w"> </span><span class="p">];</span>
+
+<span class="nb">rref</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">rref</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ans =
+
+     1     0
+     0     1
+     0     0
+
+
+ans =
+
+     1     0     0
+     0     1     0
+     0     0     1
+</pre></div>
+</div>
+</div>
+</div>
+<p>Both matrices <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> have a pivot in each column, so their corresponding transformations will be one-to-one.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="nb">rref</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ans =
+
+     1     4     0     0
+     0     0     1     0
+     0     0     0     1
+     0     0     0     0
+</pre></div>
+</div>
+</div>
+</div>
+<p>While it certainly would be possible for a <span class="math notranslate nohighlight">\(4\times 4\)</span> matrix to be one-to-one, this one is not. It has only three pivots.</p>
+<section id="theorem-onto-matrix-transformations">
+<h3>Theorem. <em>Onto</em> matrix transformations.<a class="headerlink" href="#theorem-onto-matrix-transformations" title="Link to this heading">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(A\)</span> be an <span class="math notranslate nohighlight">\(m\times n\)</span> matrix, and let <span class="math notranslate nohighlight">\(T\left(\vec x\right) = A \vec x\)</span> be the associated matrix transformation. The following statements are equivalent:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(T\)</span> is onto.</p></li>
+<li><p><span class="math notranslate nohighlight">\(T\left(\vec x\right) = \vec b\)</span> has at least one solution for every <span class="math notranslate nohighlight">\(\vec b \in \mathbb R^m\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A\vec x = \vec b\)</span> is consistent for every <span class="math notranslate nohighlight">\(\vec b \in \mathbb R^m\)</span></p></li>
+<li><p>The columns of <span class="math notranslate nohighlight">\(A\)</span> span <span class="math notranslate nohighlight">\(\mathbb R^m\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A\)</span> has a pivot in every row.</p></li>
+<li><p>The range of <span class="math notranslate nohighlight">\(T\)</span> has dimension <span class="math notranslate nohighlight">\(m\)</span>.</p></li>
+</ol>
+<p>Let’s consider the same 4 matrices as before.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A square matrix <span class="math notranslate nohighlight">\(M\)</span> is both <em>one-to-one</em> and <em>onto</em>, or neither.</p>
+</div>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">11</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="s">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="s">1</span><span class="w"> </span><span class="s">]</span><span class="p">;</span>
+<span class="n">B</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">2</span><span class="w"> </span><span class="s">3</span><span class="w"> </span><span class="s">5</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="o">-</span><span class="mi">24</span><span class="w"> </span><span class="p">];</span>
+<span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="s">4</span><span class="w"> </span><span class="s">1</span><span class="w"> </span><span class="s">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="s">4</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="s">4</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">];</span>
+<span class="n">D</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="mi">18</span><span class="w"> </span><span class="o">-</span><span class="mi">7</span><span class="w"> </span><span class="o">-</span><span class="mi">6</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">16</span><span class="w"> </span><span class="o">-</span><span class="mi">8</span><span class="w"> </span><span class="o">-</span><span class="mi">57</span><span class="w"> </span><span class="o">-</span><span class="mi">18</span><span class="w"> </span><span class="o">-</span><span class="mi">19</span><span class="w"> </span><span class="p">];</span>
+
+<span class="nb">rref</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ans =
+
+     1     0
+     0     1
+     0     0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Of course, there is no way for the <em>tall</em> matrix <span class="math notranslate nohighlight">\(A\)</span> to be onto since it can have at most 2 pivots.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="nb">rref</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ans =
+
+     1     0     0
+     0     1     0
+     0     0     1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="nb">rref</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ans =
+
+    1.0000    0.5000         0         0   -1.2500
+         0         0    1.0000         0    1.0000
+         0         0         0    1.0000   -1.0000
+</pre></div>
+</div>
+</div>
+</div>
+<p>The transformations associated with matrices <span class="math notranslate nohighlight">\(B\)</span> and <span class="math notranslate nohighlight">\(D\)</span> are <em>onto</em> because the matrices have pivots in every row.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="nb">rref</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ans =
+
+     1     4     0     0
+     0     0     1     0
+     0     0     0     1
+     0     0     0     0
+</pre></div>
+</div>
+</div>
+</div>
+<p>The transformation associated with matrix <span class="math notranslate nohighlight">\(C\)</span> is not <em>onto</em> because not every row has a pivot.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "matlab"
+        },
+        kernelOptions: {
+            name: "matlab",
+            path: "./ch3"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'matlab'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">3.1 Matrix Transformations</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">3.3 Linear Transformations</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#domain-and-codomain">Domain and Codomain</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theorem-one-to-one-matrix-transformations">Theorem. <em>One-to-one</em> matrix transformations.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theorem-onto-matrix-transformations">Theorem. <em>Onto</em> matrix transformations.</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Robb Sinn
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
